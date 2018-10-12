@@ -991,8 +991,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CWEB665WS6;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/include",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/include",
@@ -1007,8 +1007,9 @@
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/lib",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cnrmobile.CNRTeaRoadTest.simple-player-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS-openGL";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1017,8 +1018,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CWEB665WS6;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/include",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/include",
@@ -1033,8 +1034,9 @@
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/lib",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cnrmobile.CNRTeaRoadTest.simple-player-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS-openGL";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
