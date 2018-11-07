@@ -12,7 +12,12 @@
 #import <GameController/GameController.h>
 #import <CoreMotion/CoreMotion.h>
 
-@interface ViewController ()
+#include "ffplay.h"
+#import "PJGLKView.h"
+#import "display_frame.h"
+@interface ViewController (){
+    VideoState *videoPlayer;
+}
 
 @end
 
@@ -20,14 +25,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    PJGLKView *playerView = [[PJGLKView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.width/16*9)];
+    playerView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:playerView];
+    videoPlayer = av_mallocz(sizeof(VideoState));
+//    char *url = "http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8";
+    char *url = "http://sbslive.cnrmobile.com/storage/storage4/34/63/01/9b593f93ede9045166882ecbab710cd0.3gp";
+    preparePlayerWindow(videoPlayer, (__bridge void *)(playerView), url);
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)dealloc{
+    av_free(videoPlayer);
 }
-
 
 @end

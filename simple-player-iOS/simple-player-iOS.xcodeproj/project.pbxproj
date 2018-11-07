@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190555B62192D2740030F93D /* compileShaderTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 190555B52192D2740030F93D /* compileShaderTool.m */; };
+		190555B92192D2890030F93D /* display_frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 190555B82192D2890030F93D /* display_frame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		190555C02192D3330030F93D /* mvp_vsh.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 190555BF2192D3330030F93D /* mvp_vsh.glsl */; };
+		190555C22192D3600030F93D /* YUV420P_fsh.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 190555C12192D3600030F93D /* YUV420P_fsh.glsl */; };
+		190555C52192D4710030F93D /* PJGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 190555C32192D4710030F93D /* PJGLKView.m */; };
 		19200BD0216F65B000EF7D6F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19200BCF216F65B000EF7D6F /* AppDelegate.m */; };
 		19200BD3216F65B100EF7D6F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19200BD2216F65B100EF7D6F /* ViewController.m */; };
 		19200BD6216F65B100EF7D6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19200BD4216F65B100EF7D6F /* Main.storyboard */; };
@@ -50,6 +55,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190555B42192D2740030F93D /* compileShaderTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = compileShaderTool.h; sourceTree = "<group>"; };
+		190555B52192D2740030F93D /* compileShaderTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = compileShaderTool.m; sourceTree = "<group>"; };
+		190555B72192D2890030F93D /* display_frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = display_frame.h; sourceTree = "<group>"; };
+		190555B82192D2890030F93D /* display_frame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = display_frame.m; sourceTree = "<group>"; };
+		190555BF2192D3330030F93D /* mvp_vsh.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mvp_vsh.glsl; sourceTree = "<group>"; };
+		190555C12192D3600030F93D /* YUV420P_fsh.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = YUV420P_fsh.glsl; sourceTree = "<group>"; };
+		190555C32192D4710030F93D /* PJGLKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJGLKView.m; sourceTree = "<group>"; };
+		190555C42192D4710030F93D /* PJGLKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJGLKView.h; sourceTree = "<group>"; };
 		19200BCB216F65B000EF7D6F /* simple-player-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple-player-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19200BCE216F65B000EF7D6F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		19200BCF216F65B000EF7D6F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -274,6 +287,7 @@
 		19200DF6216F677C00EF7D6F /* SDL_cpuinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_cpuinfo.h; sourceTree = "<group>"; };
 		19200DF7216F677C00EF7D6F /* SDL_test_compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_test_compare.h; sourceTree = "<group>"; };
 		19200DF8216F677C00EF7D6F /* SDL_opengles2_gl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_opengles2_gl2.h; sourceTree = "<group>"; };
+		19B653812170917C00E1F4DA /* ffplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffplay.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +326,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		190555BA2192D3050030F93D /* vsh */ = {
+			isa = PBXGroup;
+			children = (
+				190555BF2192D3330030F93D /* mvp_vsh.glsl */,
+			);
+			path = vsh;
+			sourceTree = "<group>";
+		};
+		190555BB2192D3050030F93D /* fsh */ = {
+			isa = PBXGroup;
+			children = (
+				190555C12192D3600030F93D /* YUV420P_fsh.glsl */,
+			);
+			path = fsh;
+			sourceTree = "<group>";
+		};
+		190555BC2192D3050030F93D /* gles */ = {
+			isa = PBXGroup;
+			children = (
+				190555B42192D2740030F93D /* compileShaderTool.h */,
+				190555B52192D2740030F93D /* compileShaderTool.m */,
+			);
+			path = gles;
+			sourceTree = "<group>";
+		};
 		19200BC2216F65B000EF7D6F = {
 			isa = PBXGroup;
 			children = (
@@ -336,16 +375,15 @@
 		19200BCD216F65B000EF7D6F /* simple-player-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				19B653822170A8BC00E1F4DA /* GLKView */,
+				19B653802170915F00E1F4DA /* FFplay */,
+				19B653612170822500E1F4DA /* GLES2 */,
 				19200D9F216F675800EF7D6F /* SDL2 */,
 				19200D1A216F670300EF7D6F /* FFmpeg-iOS */,
 				19200BCE216F65B000EF7D6F /* AppDelegate.h */,
 				19200BCF216F65B000EF7D6F /* AppDelegate.m */,
 				19200BD1216F65B000EF7D6F /* ViewController.h */,
 				19200BD2216F65B100EF7D6F /* ViewController.m */,
-				19200C8F216F663900EF7D6F /* cmdutils.c */,
-				19200C90216F663900EF7D6F /* cmdutils.h */,
-				19200C91216F663900EF7D6F /* ffplay.c */,
-				19200C94216F664B00EF7D6F /* config.h */,
 				19200BD4216F65B100EF7D6F /* Main.storyboard */,
 				19200BD7216F65B200EF7D6F /* Assets.xcassets */,
 				19200BD9216F65B200EF7D6F /* LaunchScreen.storyboard */,
@@ -686,6 +724,39 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		19B653612170822500E1F4DA /* GLES2 */ = {
+			isa = PBXGroup;
+			children = (
+				190555BC2192D3050030F93D /* gles */,
+				190555BB2192D3050030F93D /* fsh */,
+				190555BA2192D3050030F93D /* vsh */,
+			);
+			path = GLES2;
+			sourceTree = "<group>";
+		};
+		19B653802170915F00E1F4DA /* FFplay */ = {
+			isa = PBXGroup;
+			children = (
+				19200C94216F664B00EF7D6F /* config.h */,
+				19200C8F216F663900EF7D6F /* cmdutils.c */,
+				19200C90216F663900EF7D6F /* cmdutils.h */,
+				19200C91216F663900EF7D6F /* ffplay.c */,
+				19B653812170917C00E1F4DA /* ffplay.h */,
+			);
+			path = FFplay;
+			sourceTree = "<group>";
+		};
+		19B653822170A8BC00E1F4DA /* GLKView */ = {
+			isa = PBXGroup;
+			children = (
+				190555C42192D4710030F93D /* PJGLKView.h */,
+				190555C32192D4710030F93D /* PJGLKView.m */,
+				190555B72192D2890030F93D /* display_frame.h */,
+				190555B82192D2890030F93D /* display_frame.m */,
+			);
+			path = GLKView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -790,7 +861,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				19200BDB216F65B200EF7D6F /* LaunchScreen.storyboard in Resources */,
+				190555C22192D3600030F93D /* YUV420P_fsh.glsl in Resources */,
 				19200BD8216F65B200EF7D6F /* Assets.xcassets in Resources */,
+				190555C02192D3330030F93D /* mvp_vsh.glsl in Resources */,
 				19200BD6216F65B100EF7D6F /* Main.storyboard in Resources */,
 				19200DF9216F677C00EF7D6F /* SDL_config.h.cmake in Resources */,
 				19200DFA216F677C00EF7D6F /* SDL_config.h.in in Resources */,
@@ -819,10 +892,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				19200C93216F663A00EF7D6F /* ffplay.c in Sources */,
+				190555C52192D4710030F93D /* PJGLKView.m in Sources */,
+				190555B62192D2740030F93D /* compileShaderTool.m in Sources */,
 				19200C92216F663A00EF7D6F /* cmdutils.c in Sources */,
 				19200BD3216F65B100EF7D6F /* ViewController.m in Sources */,
 				19200BDE216F65B200EF7D6F /* main.m in Sources */,
 				19200BD0216F65B000EF7D6F /* AppDelegate.m in Sources */,
+				190555B92192D2890030F93D /* display_frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -991,8 +1067,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CWEB665WS6;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/include",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/include",
@@ -1007,7 +1084,7 @@
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/lib",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS-openGL";
+				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1018,8 +1095,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CWEB665WS6;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/include",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/include",
@@ -1034,7 +1112,7 @@
 					"$(PROJECT_DIR)/simple-player-iOS/FFmpeg-iOS/lib",
 					"$(PROJECT_DIR)/simple-player-iOS/SDL2/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS-openGL";
+				PRODUCT_BUNDLE_IDENTIFIER = "simple-player-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
