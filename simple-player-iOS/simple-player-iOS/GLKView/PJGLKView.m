@@ -125,7 +125,6 @@ static const GLfloat texcoords[8] = {
 - (void)display_frame:(VideoFrame *)frame{
     //每次刷新画面都需要调用setCurrentContext
     [EAGLContext setCurrentContext:_context];
-
     [self loadShadersWithFormat:frame->format];
   
     glUseProgram(program);
