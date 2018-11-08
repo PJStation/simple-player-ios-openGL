@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <OpenGLES/ES2/gl.h>
 #include <Foundation/Foundation.h>
+
 #define GLES2_MAX_PLANE 3
 
 GLuint compileShader(NSString *shaderName, GLenum shaderType);
