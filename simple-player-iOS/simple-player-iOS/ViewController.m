@@ -36,7 +36,7 @@
 
 
 - (void)dealloc{
-    av_free(videoPlayer);
+    close_stream(videoPlayer);
 }
 
 @end

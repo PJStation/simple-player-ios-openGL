@@ -39,13 +39,13 @@
 # include "libavfilter/buffersrc.h"
 #endif
 
-#include <SDL.h>
-//#include <SDL_thread.h>
-//#include <SDL_timer.h>
-//#include <SDL_mutex.h>
-//#include <SDL_audio.h>
-//#include <SDL_main.h>
-//#include <SDL_pixels.h>
+//#include <SDL.h>
+#include <SDL_thread.h>
+#include <SDL_timer.h>
+#include <SDL_mutex.h>
+#include <SDL_audio.h>
+#include <SDL_main.h>
+#include <SDL_pixels.h>
 
 #include "cmdutils.h"
 
@@ -299,4 +299,5 @@ typedef struct VideoState {
 
 
 int preparePlayerWindow(void *videoPlayer, void *view, char *url);
+void close_stream(VideoState *is);
 #endif /* ffplay_h */

@@ -1025,7 +1025,9 @@ static void stream_close(VideoState *is)
 //        SDL_DestroyTexture(is->sub_texture);
     av_free(is);
 }
-
+void close_stream(VideoState *is){
+    stream_close(is);
+}
 //static void do_exit(VideoState *is)
 //{
 //    if (is) {
@@ -2164,9 +2166,9 @@ static int audio_decode_frame(VideoState *is)
 #ifdef DEBUG
     {
         static double last_clock;
-        printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n",
-               is->audio_clock - last_clock,
-               is->audio_clock, audio_clock0);
+//        printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n",
+//               is->audio_clock - last_clock,
+//               is->audio_clock, audio_clock0);
         last_clock = is->audio_clock;
     }
 #endif
