@@ -89,13 +89,13 @@ static const GLfloat texcoords[8] = {
     if (GL_NO_ERROR != glError) {
         NSLog(@"failed to setup GL %x\n", glError);
     }
-    
-}
-- (void)loadShadersWithFormat:(enum AVPixelFormat)pixelFormat{
-    program = glCreateProgram();
     vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
     fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
-
+}
+- (void)loadShaders{
+    program = glCreateProgram();
+//    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
+//    fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
     glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
    
@@ -125,7 +125,7 @@ static const GLfloat texcoords[8] = {
 - (void)display_frame:(VideoFrame *)frame{
     //每次刷新画面都需要调用setCurrentContext
     [EAGLContext setCurrentContext:_context];
-    [self loadShadersWithFormat:frame->format];
+    [self loadShaders];
   
     glUseProgram(program);
     //4.create the texture

@@ -10,5 +10,5 @@
 #include "PJGLKView.h"
 void display_frame(void *view,VideoFrame *frame){
     PJGLKView *glkView = CFBridgingRelease(view);
-    [glkView display_frame:frame];
+     [glkView display_frame:frame];
 }
