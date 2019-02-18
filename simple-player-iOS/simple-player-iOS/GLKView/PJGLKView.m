@@ -58,6 +58,19 @@ static const GLfloat texcoords[8] = {
     return self;
 }
 
+- (void)dealloc{
+    if (_framebuffer) {
+        glDeleteFramebuffers(1, &_framebuffer);
+        _framebuffer = 0;
+    }
+    
+    if (_renderbuffer) {
+        glDeleteRenderbuffers(1, &_renderbuffer);
+        _renderbuffer = 0;
+    }
+    glFinish();
+    
+}
 
 - (void)setupRender{
     _eaglLayer = (CAEAGLLayer*) self.layer;
@@ -89,14 +102,15 @@ static const GLfloat texcoords[8] = {
     if (GL_NO_ERROR != glError) {
         NSLog(@"failed to setup GL %x\n", glError);
     }
-    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
-    fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
+//    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
+//    fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
+//    [self loadShaders];
 }
 
 - (void)loadShaders{
     program = glCreateProgram();
-//    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
-//    fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
+    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
+    fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
     glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
    
@@ -206,19 +220,7 @@ static const GLfloat texcoords[8] = {
     }
 }
 
-- (void)dealloc{
-    if (_framebuffer) {
-        glDeleteFramebuffers(1, &_framebuffer);
-        _framebuffer = 0;
-    }
-    
-    if (_renderbuffer) {
-        glDeleteRenderbuffers(1, &_renderbuffer);
-        _renderbuffer = 0;
-    }
-    glFinish();
 
-}
 
 
 @end

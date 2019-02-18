@@ -9,9 +9,9 @@
 #include "display_frame.h"
 #include "PJGLKView.h"
 void display_frame(void *view,VideoFrame *frame){
-//    @autoreleasepool {
+    @autoreleasepool {
         PJGLKView *glkView = view;
         [glkView display_frame:frame];
-//    }
+    }
   
 }

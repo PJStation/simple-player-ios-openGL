@@ -30,8 +30,8 @@
     [self.view addSubview:playerView];
     videoPlayer = av_mallocz(sizeof(VideoState));
     char *playUrl = "http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8";
-  
     
+    playUrl = "http://sbslive.cnrmobile.com/storage/storage4/34/63/01/9b593f93ede9045166882ecbab710cd0.3gp";
     preparePlayerWindow(videoPlayer, (__bridge void *)(playerView), playUrl);
     
 }
