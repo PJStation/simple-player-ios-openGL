@@ -35,6 +35,7 @@
 		19200DA3216F675800EF7D6F /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19200DA2216F675800EF7D6F /* libSDL2.a */; };
 		19200DF9216F677C00EF7D6F /* SDL_config.h.cmake in Resources */ = {isa = PBXBuildFile; fileRef = 19200DCA216F677B00EF7D6F /* SDL_config.h.cmake */; };
 		19200DFA216F677C00EF7D6F /* SDL_config.h.in in Resources */ = {isa = PBXBuildFile; fileRef = 19200DEC216F677C00EF7D6F /* SDL_config.h.in */; };
+		197EF9A4221AAF850015F02F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 197EF9A3221AAF850015F02F /* VideoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -287,6 +288,8 @@
 		19200DF6216F677C00EF7D6F /* SDL_cpuinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_cpuinfo.h; sourceTree = "<group>"; };
 		19200DF7216F677C00EF7D6F /* SDL_test_compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_test_compare.h; sourceTree = "<group>"; };
 		19200DF8216F677C00EF7D6F /* SDL_opengles2_gl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_opengles2_gl2.h; sourceTree = "<group>"; };
+		197EF9A2221AAF850015F02F /* VideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		197EF9A3221AAF850015F02F /* VideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		19B653812170917C00E1F4DA /* ffplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffplay.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -384,6 +387,8 @@
 				19200BCF216F65B000EF7D6F /* AppDelegate.m */,
 				19200BD1216F65B000EF7D6F /* ViewController.h */,
 				19200BD2216F65B100EF7D6F /* ViewController.m */,
+				197EF9A2221AAF850015F02F /* VideoViewController.h */,
+				197EF9A3221AAF850015F02F /* VideoViewController.m */,
 				19200BD4216F65B100EF7D6F /* Main.storyboard */,
 				19200BD7216F65B200EF7D6F /* Assets.xcassets */,
 				19200BD9216F65B200EF7D6F /* LaunchScreen.storyboard */,
@@ -893,6 +898,7 @@
 			files = (
 				19200C93216F663A00EF7D6F /* ffplay.c in Sources */,
 				190555C52192D4710030F93D /* PJGLKView.m in Sources */,
+				197EF9A4221AAF850015F02F /* VideoViewController.m in Sources */,
 				190555B62192D2740030F93D /* compileShaderTool.m in Sources */,
 				19200C92216F663A00EF7D6F /* cmdutils.c in Sources */,
 				19200BD3216F65B100EF7D6F /* ViewController.m in Sources */,

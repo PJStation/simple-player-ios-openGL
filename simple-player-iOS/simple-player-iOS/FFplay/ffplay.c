@@ -55,7 +55,7 @@ static int autoexit;
 static int exit_on_keydown;
 static int exit_on_mousedown;
 static int loop = 1;
-static int framedrop = -1;
+static int framedrop = 0;
 static int infinite_buffer = -1;
 static enum ShowMode show_mode = SHOW_MODE_NONE;
 static const char *audio_codec_name;
@@ -83,14 +83,16 @@ static AVPacket flush_pkt;
 //static SDL_Window *window;
 //static SDL_Renderer *renderer;
 //static SDL_RendererInfo renderer_info = {0};
-static SDL_AudioDeviceID audio_dev;
+//static SDL_AudioDeviceID audio_dev;
 
 static void *glkView;
 
 static const struct TextureFormatEntry {
     enum AVPixelFormat format;
     int texture_fmt;
-} sdl_texture_format_map[] = {
+}
+
+sdl_texture_format_map[] = {
     { AV_PIX_FMT_RGB8,           SDL_PIXELFORMAT_RGB332 },
     { AV_PIX_FMT_RGB444,         SDL_PIXELFORMAT_RGB444 },
     { AV_PIX_FMT_RGB555,         SDL_PIXELFORMAT_RGB555 },
@@ -1099,9 +1101,9 @@ static void video_display(VideoState *is)
 
 //    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 //    SDL_RenderClear(renderer);
-    if (is->audio_st && is->show_mode != SHOW_MODE_VIDEO)
-        video_audio_display(is);
-    else if (is->video_st)
+//    if (is->audio_st && is->show_mode != SHOW_MODE_VIDEO)
+//        video_audio_display(is);
+//    else if (is->video_st)
         video_image_display(is);
 //    SDL_RenderPresent(renderer);
 }
@@ -1390,20 +1392,20 @@ retry:
                                 || (is->vidclk.pts > (sp->pts + ((float) sp->sub.end_display_time / 1000)))
                                 || (sp2 && is->vidclk.pts > (sp2->pts + ((float) sp2->sub.start_display_time / 1000))))
                         {
-                            if (sp->uploaded) {
-                                int i;
-                                for (i = 0; i < sp->sub.num_rects; i++) {
-                                    AVSubtitleRect *sub_rect = sp->sub.rects[i];
-                                    uint8_t *pixels;
-                                    int pitch, j;
+//                            if (sp->uploaded) {
+//                                int i;
+//                                for (i = 0; i < sp->sub.num_rects; i++) {
+//                                    AVSubtitleRect *sub_rect = sp->sub.rects[i];
+//                                    uint8_t *pixels;
+//                                    int pitch, j;
 
 //                                    if (!SDL_LockTexture(is->sub_texture, (SDL_Rect *)sub_rect, (void **)&pixels, &pitch)) {
 //                                        for (j = 0; j < sub_rect->h; j++, pixels += pitch)
 //                                            memset(pixels, 0, sub_rect->w << 2);
 //                                        SDL_UnlockTexture(is->sub_texture);
 //                                    }
-                                }
-                            }
+//                                }
+//                            }
                             frame_queue_next(&is->subpq);
                         } else {
                             break;
@@ -1447,17 +1449,17 @@ display:
                 av_diff = get_master_clock(is) - get_clock(&is->vidclk);
             else if (is->audio_st)
                 av_diff = get_master_clock(is) - get_clock(&is->audclk);
-            av_log(NULL, AV_LOG_INFO,
-                   "%7.2f %s:%7.3f fd=%4d aq=%5dKB vq=%5dKB sq=%5dB f=%"PRId64"/%"PRId64"   \r",
-                   get_master_clock(is),
-                   (is->audio_st && is->video_st) ? "A-V" : (is->video_st ? "M-V" : (is->audio_st ? "M-A" : "   ")),
-                   av_diff,
-                   is->frame_drops_early + is->frame_drops_late,
-                   aqsize / 1024,
-                   vqsize / 1024,
-                   sqsize,
-                   is->video_st ? is->viddec.avctx->pts_correction_num_faulty_dts : 0,
-                   is->video_st ? is->viddec.avctx->pts_correction_num_faulty_pts : 0);
+//            av_log(NULL, AV_LOG_INFO,
+//                   "%7.2f %s:%7.3f fd=%4d aq=%5dKB vq=%5dKB sq=%5dB f=%"PRId64"/%"PRId64"   \r",
+//                   get_master_clock(is),
+//                   (is->audio_st && is->video_st) ? "A-V" : (is->video_st ? "M-V" : (is->audio_st ? "M-A" : "   ")),
+//                   av_diff,
+//                   is->frame_drops_early + is->frame_drops_late,
+//                   aqsize / 1024,
+//                   vqsize / 1024,
+//                   sqsize,
+//                   is->video_st ? is->viddec.avctx->pts_correction_num_faulty_dts : 0,
+//                   is->video_st ? is->viddec.avctx->pts_correction_num_faulty_pts : 0);
             fflush(stdout);
             last_time = cur_time;
         }
@@ -2831,7 +2833,8 @@ static int video_refresh_thread(void *arg) {
     //每remaining_time运行一次循环（刷新一次屏幕）
     while (!is->abort_request) {
         if (remaining_time > 0.0) {
-            av_usleep((int64_t)(remaining_time * 1000000.0));
+            av_usleep((int)(int64_t)(remaining_time * 1000000.0));
+//            av_usleep((int64_t)(remaining_time * 1000000.0));
         }
         remaining_time = REFRESH_RATE;
         if (is->show_mode != SHOW_MODE_NONE && (!is->paused || is->force_refresh)) {
@@ -2840,11 +2843,11 @@ static int video_refresh_thread(void *arg) {
     }
     return 0;
 }
-static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
+static VideoState *stream_open(VideoState *is, const char *filename, AVInputFormat *iformat)
 {
-    VideoState *is;
+//    VideoState *is;
 
-    is = av_mallocz(sizeof(VideoState));
+//    is = av_mallocz(sizeof(VideoState));
     if (!is)
         return NULL;
     is->filename = av_strdup(filename);
@@ -2886,7 +2889,7 @@ static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
     is->muted = 0;
     is->av_sync_type = av_sync_type;
     is->video_refresh_tid = SDL_CreateThread(video_refresh_thread, "video_refresh_thread",is);
-    is->read_tid     = SDL_CreateThread(read_thread, "read_thread", is);
+    is->read_tid = SDL_CreateThread(read_thread, "read_thread", is);
     if (!is->read_tid) {
         av_log(NULL, AV_LOG_FATAL, "SDL_CreateThread(): %s\n", SDL_GetError());
 fail:
@@ -3554,7 +3557,7 @@ int preparePlayerWindow(void *videoPlayer, void *view, char *url)
 //        }
     }
 
-    is = stream_open(input_filename, file_iformat);
+    is = stream_open(is, input_filename, file_iformat);
     if (!is) {
         av_log(NULL, AV_LOG_FATAL, "Failed to initialize VideoState!\n");
 //        do_exit(NULL);

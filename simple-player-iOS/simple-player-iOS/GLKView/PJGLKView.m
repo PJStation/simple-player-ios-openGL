@@ -10,7 +10,7 @@
 #include "compileShaderTool.h"
 #include <libavcodec/avcodec.h>
 
-static const  GLfloat vertices[12] = {
+static const GLfloat vertices[12] = {
     -1.0f, -1.0f, 0.0f,
     1.0f, -1.0f, 0.0f,
     -1.0f,  1.0f, 0.0f,
@@ -92,6 +92,7 @@ static const GLfloat texcoords[8] = {
     vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
     fragment_shader = compileShader(@"YUV420P_fsh", GL_FRAGMENT_SHADER);
 }
+
 - (void)loadShaders{
     program = glCreateProgram();
 //    vertex_shader = compileShader(@"mvp_vsh", GL_VERTEX_SHADER);
@@ -205,7 +206,19 @@ static const GLfloat texcoords[8] = {
     }
 }
 
+- (void)dealloc{
+    if (_framebuffer) {
+        glDeleteFramebuffers(1, &_framebuffer);
+        _framebuffer = 0;
+    }
+    
+    if (_renderbuffer) {
+        glDeleteRenderbuffers(1, &_renderbuffer);
+        _renderbuffer = 0;
+    }
+    glFinish();
 
+}
 
 
 @end
