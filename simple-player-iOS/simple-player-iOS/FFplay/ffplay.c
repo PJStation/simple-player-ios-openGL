@@ -55,7 +55,7 @@ static int autoexit;
 static int exit_on_keydown;
 static int exit_on_mousedown;
 static int loop = 1;
-static int framedrop = 0;
+static int framedrop = -1;
 static int infinite_buffer = -1;
 static enum ShowMode show_mode = SHOW_MODE_NONE;
 static const char *audio_codec_name;
@@ -85,6 +85,7 @@ static AVPacket flush_pkt;
 //static SDL_RendererInfo renderer_info = {0};
 //static SDL_AudioDeviceID audio_dev;
 
+float playableBuffed;
 static void *glkView;
 
 static const struct TextureFormatEntry {
@@ -183,7 +184,7 @@ static int packet_queue_put(PacketQueue *q, AVPacket *pkt)
 
     if (pkt != &flush_pkt && ret < 0)
         av_packet_unref(pkt);
-
+    
     return ret;
 }
 
@@ -285,6 +286,8 @@ static int packet_queue_get(PacketQueue *q, AVPacket *pkt, int block, int *seria
             if (serial)
                 *serial = pkt1->serial;
             av_free(pkt1);
+//            av_log(NULL, AV_LOG_INFO, "video_stream->pts: %lld\n", pkt->dts);
+
             ret = 1;
             break;
         } else if (!block) {
@@ -320,6 +323,8 @@ static int decoder_decode_frame(Decoder *d, AVFrame *frame, AVSubtitle *sub) {
 
                 switch (d->avctx->codec_type) {
                     case AVMEDIA_TYPE_VIDEO:
+//                        av_log(NULL, AV_LOG_INFO, "video_stream->pts: %lld\n", d->pkt.dts);
+
                         ret = avcodec_receive_frame(d->avctx, frame);
                         if (ret >= 0) {
                             if (decoder_reorder_pts == -1) {
@@ -343,6 +348,7 @@ static int decoder_decode_frame(Decoder *d, AVFrame *frame, AVSubtitle *sub) {
                             }
                         }
                         break;
+                    default: break;
                 }
                 if (ret == AVERROR_EOF) {
                     d->finished = d->pkt_serial;
@@ -1191,6 +1197,52 @@ static double get_master_clock(VideoState *is)
     return val;
 }
 
+long ffp_get_current_position(VideoState *is){
+    assert(is);
+    if (!is || !is->ic)
+        return 0;
+    
+    int64_t start_time = is->ic->start_time;
+    int64_t start_diff = 0;
+    if (start_time > 0 && start_time != AV_NOPTS_VALUE)
+        start_diff = av_rescale(start_time, 1000, AV_TIME_BASE);
+    
+    int64_t pos = 0;
+    double pos_clock = get_master_clock(is);
+    if (isnan(pos_clock)) {
+        pos = av_rescale(is->seek_pos, 1000, AV_TIME_BASE);
+    } else {
+        pos = pos_clock * 1000;
+    }
+
+    if (pos < 0 || pos < start_diff)
+        return 0;
+
+    int64_t adjust_pos = pos - start_diff;
+    return (long)adjust_pos;
+}
+long ffp_get_duration(VideoState *is){
+    assert(is);
+    if (!is || !is->ic)
+        return 0;
+    
+    int64_t duration = av_rescale(is->ic->duration, 1000, AV_TIME_BASE);
+    if (duration < 0)
+        return 0;
+    
+    return (long)duration;
+}
+
+float ffp_get_playableBuffed(VideoState *is){
+    if (is->videoq.duration != 0) {
+        int64_t duration = is->videoq.duration * av_q2d(is->video_st->time_base) * 1000;
+//        printf("duration:%lld \n",duration);
+
+    }
+    return 0.1;
+}
+
+
 static void check_external_clock_speed(VideoState *is) {
    if (is->video_stream >= 0 && is->videoq.nb_packets <= EXTERNAL_CLOCK_MIN_FRAMES ||
        is->audio_stream >= 0 && is->audioq.nb_packets <= EXTERNAL_CLOCK_MIN_FRAMES) {
@@ -1238,7 +1290,9 @@ static void toggle_pause(VideoState *is)
     stream_toggle_pause(is);
     is->step = 0;
 }
-
+void ffp_pause(VideoState *is){
+    toggle_pause(is);
+}
 static void toggle_mute(VideoState *is)
 {
     is->muted = !is->muted;
@@ -1355,6 +1409,7 @@ retry:
             delay = compute_target_delay(last_duration, is);
 
             time= av_gettime_relative()/1000000.0;
+
             if (time < is->frame_timer + delay) {
                 *remaining_time = FFMIN(is->frame_timer + delay - time, *remaining_time);
                 goto display;
@@ -2344,6 +2399,7 @@ static int stream_component_open(VideoState *is, int stream_index)
         case AVMEDIA_TYPE_AUDIO   : is->last_audio_stream    = stream_index; forced_codec_name =    audio_codec_name; break;
         case AVMEDIA_TYPE_SUBTITLE: is->last_subtitle_stream = stream_index; forced_codec_name = subtitle_codec_name; break;
         case AVMEDIA_TYPE_VIDEO   : is->last_video_stream    = stream_index; forced_codec_name =    video_codec_name; break;
+        default: break;
     }
     if (forced_codec_name)
         codec = avcodec_find_decoder_by_name(forced_codec_name);
@@ -2804,6 +2860,8 @@ static int read_thread(void *arg)
         } else if (pkt->stream_index == is->video_stream && pkt_in_play_range
                    && !(is->video_st->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
             packet_queue_put(&is->videoq, pkt);
+//            av_log(NULL, AV_LOG_INFO, "video_stream->pts: %lld\n", pkt->pts);
+            
         } else if (pkt->stream_index == is->subtitle_stream && pkt_in_play_range) {
             packet_queue_put(&is->subtitleq, pkt);
         } else {
@@ -3474,7 +3532,8 @@ int preparePlayerWindow(void *videoPlayer, void *view, char *url)
  
     init_dynload();
 
-    av_log_set_flags(AV_LOG_SKIP_REPEATED);
+    av_log_set_flags(AV_LOG_PRINT_LEVEL);
+    av_log_set_level(AV_LOG_ERROR);
 
     /* register all codecs, demux and protocols */
 #if CONFIG_AVDEVICE

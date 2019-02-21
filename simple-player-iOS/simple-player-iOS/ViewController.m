@@ -18,10 +18,4 @@
     [super viewDidLoad];
 }
 
-- (IBAction)playButtonClick:(id)sender {
-    VideoViewController *vc = [[VideoViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-
 @end

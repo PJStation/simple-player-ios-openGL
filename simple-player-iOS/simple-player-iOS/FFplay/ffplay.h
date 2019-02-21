@@ -300,4 +300,9 @@ typedef struct VideoState {
 
 int preparePlayerWindow(void *videoPlayer, void *view, char *url);
 void close_stream(VideoState *is);
+long ffp_get_current_position(VideoState *is);
+long ffp_get_duration(VideoState *is);
+float ffp_get_playableBuffed(VideoState *is);
+void ffp_pause(VideoState *is);
+
 #endif /* ffplay_h */
